@@ -144,11 +144,16 @@ namespace Activity.Controllers
         [HttpPost("newEvent")]
         public IActionResult NewEvent(Event newEvent)
         {
-            
-            if(newEvent.DateOfEvent.Date < DateTime.Today.Date)
+            if(newEvent.DateOfEvent != null)
+            {
+                DateTime Now = (DateTime)newEvent.DateOfEvent;
+                if(Now.Date < DateTime.Today.Date)
             {
                 ModelState.AddModelError("DateOfEvent", "Please input a future date for your event.");
             }
+            }
+            
+            
             if(ModelState.IsValid)
             {
                 int? seshUser = HttpContext.Session.GetInt32("ID");

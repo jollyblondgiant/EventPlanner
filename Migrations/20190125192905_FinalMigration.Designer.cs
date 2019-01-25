@@ -3,14 +3,16 @@ using System;
 using Activity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Activity.Migrations
 {
     [DbContext(typeof(ActivityContext))]
-    partial class ActivityContextModelSnapshot : ModelSnapshot
+    [Migration("20190125192905_FinalMigration")]
+    partial class FinalMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,7 @@ namespace Activity.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int?>("Duration")
-                        .IsRequired();
+                    b.Property<int>("Duration");
 
                     b.Property<string>("DurationUnit")
                         .IsRequired();

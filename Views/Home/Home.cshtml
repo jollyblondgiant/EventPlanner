@@ -30,7 +30,7 @@ HERE IS A LIST OF ACTIVITIES
                 <td>@x.Participants.Count</td>
                 @if(x.CoordinatorID == (int)seshUser)
                 {
-                    <td>Call off</td>
+                    <td><a href ="/delete/@x.ID"><button class = "btn btn-danger">Call it off!</button></a></td>
                 }
                 @if(x.CoordinatorID != (int)seshUser)
                 {
