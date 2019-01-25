@@ -1,0 +1,67 @@
+
+@using Microsoft.AspNetCore.Http;
+
+
+HERE IS A LIST OF ACTIVITIES
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+        <th scope="col">Activity</th>
+        <th scope="col">Date and Time</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Event Coordinator</th>
+        <th scope="col">No. of Participants</th>
+        <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+      @{
+        int? seshUser = @Context.Session.GetInt32("ID");
+        foreach(var x in ViewBag.Events)
+        {
+             <tr>
+         
+                <th scope="row"><a href="activity/@x.ID">@x.Title</a></th>
+                <td>@x.DateOfEvent.ToString("MM/dd") @x.Time.TimeOfDay </td>
+                <td>@x.Duration @x.DurationUnit</td>
+                <td>@x.Coordinator.FirstName</td>
+                <td>@x.Participants.Count</td>
+                @if(x.CoordinatorID == (int)seshUser)
+                {
+                    <td>Call off</td>
+                }
+                @if(x.CoordinatorID != (int)seshUser)
+                {
+                    bool going = false;
+                    foreach(var part in x.Participants)
+                    {
+                        if(part.User.ID == (int)seshUser)
+                        {
+                            going = true;
+                        }
+                    }
+                    if(going)
+                    {
+                         <td><a href="/UnRsvp/@x.ID"><button class="btn btn-danger">Leave Event</button></a></td>
+                    }
+                    else
+                    {
+                        <td><a href="/Rsvp/@x.ID"><button class="btn btn-success">Join Event</button></a></td>
+                    }
+                    
+                }
+                
+               </tr>
+        }
+        }
+    
+   
+
+  </tbody>
+</table>
+
+
+<a href="newEvent"><button class="btn btn-success">Add New Activity!</button></a>
+

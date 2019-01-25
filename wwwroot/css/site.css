@@ -1,0 +1,14 @@
+/*Write all of your CSS here*/
+#errors{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15%;
+}
+#errors *{
+    display: block;
+    background-color: pink;
+
+}
+#Banner span{
+    margin-right: 100px;
+}
