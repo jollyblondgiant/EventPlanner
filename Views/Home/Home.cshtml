@@ -2,27 +2,27 @@
 @using Microsoft.AspNetCore.Http;
 
 
-HERE IS A LIST OF ACTIVITIES
 
 <table class="table table-striped">
-  <thead>
-    <tr>
-        <th scope="col">Activity</th>
-        <th scope="col">Date and Time</th>
-        <th scope="col">Duration</th>
-        <th scope="col">Event Coordinator</th>
-        <th scope="col">No. of Participants</th>
-        <th scope="col">Actions</th>
+    <thead>
+        <tr>
+            <th scope="col">Activity</th>
+            <th scope="col">Date and Time</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Event Coordinator</th>
+            <th scope="col">No. of Participants</th>
+            <th scope="col">Actions</th>
 
-    </tr>
-  </thead>
-  <tbody>
-      @{
+        </tr>
+    </thead>
+    <tbody>
+    @{
         int? seshUser = @Context.Session.GetInt32("ID");
+        bool booked = false;
         foreach(var x in ViewBag.Events)
         {
-             <tr>
-         
+            <tr>
+        
                 <th scope="row"><a href="activity/@x.ID">@x.Title</a></th>
                 <td>@x.DateOfEvent.ToString("MM/dd") @x.Time.TimeOfDay </td>
                 <td>@x.Duration @x.DurationUnit</td>
@@ -44,22 +44,39 @@ HERE IS A LIST OF ACTIVITIES
                     }
                     if(going)
                     {
-                         <td><a href="/UnRsvp/@x.ID"><button class="btn btn-danger">Leave Event</button></a></td>
+                        <td><a href="/UnRsvp/@x.ID"><button class="btn btn-danger">Leave Event</button></a></td>
                     }
                     else
                     {
-                        <td><a href="/Rsvp/@x.ID"><button class="btn btn-success">Join Event</button></a></td>
+                        foreach(var part in ViewBag.EventsWithConflicts)
+                            {
+                                if(part.Event.DateOfEvent == x.DateOfEvent)
+                                {
+                                    booked = true;
+                                }
+                            }
+
+
+                        if(!booked)
+                        {
+                            <td><a href="/Rsvp/@x.ID"><button class="btn btn-success">Join Event</button></a></td>
+                        }
+                        else
+                        {
+                            <td><button class="btn" disabled> You're booked!</button></td>
+                        }
+                        
                     }
                     
                 }
                 
-               </tr>
+            </tr>
         }
         }
     
    
 
-  </tbody>
+    </tbody>
 </table>
 
 

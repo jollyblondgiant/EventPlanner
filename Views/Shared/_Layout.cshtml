@@ -13,20 +13,22 @@
      @{
         int? UserID = @Context.Session.GetInt32("ID");
         string UserName = @Context.Session.GetString("UserName");
-        string Where = @Context.Session.GetString("Page");
-        if(UserID == null && Where ==null)
-        {
-            <h1>Welcome to The Dojo Activity Center!</h1>
-        }
-        if(UserID != null && Where == "Home")
-        {
-            <p id="Banner"><span>Dojo Activity Center</span>  <span>Welcome, @UserName!</span> <a href = "/logout">Log out</a> </p>
         
-        }
-        if(UserID != null && Where != "Home")
+        if(UserID == null )
         {
-            <p id="Banner"><span>Dojo Activity Center</span>  <a href="/home">Home</a> <a href = "/logout">Log out</a> </p>
+            <div class="flex-container">
+            <h1>Welcome to The Dojo Activity Center!</h1>
+            </div>
         }
+       
+        if(UserID != null )
+        {
+            <div class="flex-container">
+            <h3>Dojo Activity Center</h3>  <a class="btn btn-secondary" href="/home">Home</a> <a class="btn btn-danger" href = "/logout">Log out</a> 
+            </div>
+
+        }
+        
      }
     
     

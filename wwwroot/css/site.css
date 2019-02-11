@@ -9,6 +9,33 @@
     background-color: pink;
 
 }
-#Banner span{
-    margin-right: 100px;
+
+body{
+    padding: 5%;
+    background-color: #B452CD;
+}
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+    background-color: #EED2EE;
+    border-radius: 25px;
+    padding: 20px;
+
+}
+.flex-container *{
+    margin: 0 auto;
+  
+}
+.container{
+    background-color: #EED2EE;
+    padding: 20px;
+    border-radius: 25px;
+}
+.btn-danger{
+    background-color: #D387AB;
+}
+.btn-success{
+    background-color: #B279A7;
 }

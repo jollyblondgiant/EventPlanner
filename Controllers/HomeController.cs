@@ -18,7 +18,6 @@ namespace Activity.Controllers
         {
             _dbContext = context;
         }
-        // GET: /Home/
         [HttpGet("")]
         public IActionResult Index()
         {
@@ -122,13 +121,19 @@ namespace Activity.Controllers
             {
                 return Redirect("/");
             }
-            HttpContext.Session.SetString("Page", "Home");
             List<Event> Events = _dbContext.Events
             .Include(u=>u.Participants)
             .ThenInclude(u=>u.User)
             .Include(e=>e.Coordinator)
             .ToList();
             ViewBag.Events = Events;
+            int? seshUser = HttpContext.Session.GetInt32("ID");
+
+            List<Participant> yourEvents = _dbContext.Participants
+            .Where(p=>p.UserID == (int) seshUser)
+            .Include(p=>p.Event)
+            .ToList();
+            ViewBag.EventsWithConflicts = yourEvents;
             return View();
         }
         [HttpGet("newEvent")]
@@ -195,6 +200,7 @@ namespace Activity.Controllers
         [HttpGet("Rsvp/{eventID}")]
         public IActionResult JoinEvent(int eventID)
         {
+            
             int? seshUser = HttpContext.Session.GetInt32("ID");
             Event thisEvent = _dbContext.Events.FirstOrDefault(e=>e.ID == eventID);
             User thisUser = _dbContext.Users.FirstOrDefault(u=>u.ID == (int)seshUser);
@@ -226,6 +232,7 @@ namespace Activity.Controllers
         [HttpGet("UnRsvp/{eventID}")]
         public IActionResult LeaveEvent(int eventID)
         {
+
             Event thisEvent = _dbContext.Events.FirstOrDefault(e=>e.ID == eventID);
             Participant thisPart;
             int? seshUser = HttpContext.Session.GetInt32("ID");
